@@ -1,7 +1,6 @@
 using System;
 
-// TODO: Naar andere namespace verhuizen.
-namespace talks.Controllers
+namespace talks
 {
     public class Talk
     {

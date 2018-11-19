@@ -4,16 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace talks.Controllers
+namespace talks
 {
 
     [Route("api/[controller]")]
     [ApiController]
     public class TalksController : ControllerBase
     {
-        private readonly TalksService talksService;
+        private readonly ITalksService talksService;
 
-        public TalksController(TalksService talksService) {
+        public TalksController(ITalksService talksService) {
             this.talksService = talksService;
         }
         

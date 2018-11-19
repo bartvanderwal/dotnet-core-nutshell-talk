@@ -4,18 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace talks.Controllers
+namespace talks
 {
-
-    public class TalksService
+    public class TalksService: ITalksService
     {
-
         private IList<Talk> talks;
 
         private Dictionary<string, Talk> talksCache = new Dictionary<string, Talk>();
 
         public TalksService() {
-                        talks = new List<Talk> {
+            talks = new List<Talk> {
                 new Talk(1, "Kotlin", "Avisi", new DateTime(2018, 11, 14, 12, 30, 0)),
                 new Talk(2, ".NET Core", "Bart", new DateTime(2018, 11, 19, 13, 00, 0)),
                 new Talk(3, "Ionic", "Bart", new DateTime(2018, 11, 21).Date)
@@ -25,6 +23,19 @@ namespace talks.Controllers
             fillCacheWithTalks(talks);
 
         }
+
+        /**
+        * Find a talk either by talk or by talkername
+        */
+        internal Talk findByTalkTitleOrTalkername(string searchString)
+        {
+            return (
+                from talk in talks
+                where talk.Talker.Contains(searchString) || talk.Title.Contains(searchString)
+                select talk
+            ).FirstOrDefault();
+        }
+
         public IEnumerable<Talk> Get()
         {
             return talks.ToList();
@@ -67,12 +78,12 @@ namespace talks.Controllers
         /**
          * Fill the cache.
          */
-        private void fillCacheWithTalks(IEnumerable<Talk> talks)
+        private void fillCacheWithTalks(IList<Talk> talks)
         {
             const int maxCacheSize = 2;
             var aboveMax = talks.Count()-maxCacheSize;
             if (aboveMax>0) {
-                talks = talks.Skip(aboveMax).Take(maxCacheSize);
+                talks = talks.Skip(aboveMax).Take(maxCacheSize).ToList();
             }
             // foreach(var talk in talks) {
             //     addTalkToCache(talk);

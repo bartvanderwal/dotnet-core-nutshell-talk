@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace talks.Controllers
+namespace talks
 {
     public static class Extensions {
 
@@ -9,7 +9,7 @@ namespace talks.Controllers
             return "€ " + value + ",-";
         }
 
-        public static void ForEach<T>(this IEnumerable<T> items, Action<T> action) {
+        public static void ForEach(this IList<Talk> items, Action<Talk> action) {
             foreach(var item in items) {
                 action(item);
             }

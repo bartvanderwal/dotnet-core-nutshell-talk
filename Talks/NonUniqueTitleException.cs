@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace talks.Controllers
+namespace talks
 {
     [Serializable]
     internal class NonUniqueTitleException : Exception
